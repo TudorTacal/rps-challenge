@@ -1,6 +1,10 @@
 class Game
 
-  Weapons = ["Rock", "Paper", "Scissors"]
+  WEAPONS = ["Rock", "Paper", "Scissors"]
+  GAME_RULES = {
+    rock: {rock: 0, paper:  -1, scissors: 1},
+    paper: {rock: 1, paper: 0, scissors: -1},
+    scissors: {rock: -1, paper: 1, rock: 0}}
 
   def self.create(player, computer)
     @game = Game.new(player,computer)
@@ -20,12 +24,12 @@ class Game
   def result
     return :win if win
     return :lose if lose
-    return :draw if draw  
+    return :draw if draw
   end
 
   private
     def win
-      (player.choice == "Rock" && computer.choice == "Scissors") || (player.choice == "Paper" && computer.choice == "Rock") || (player.choice == "Scissors" && computer.choice == "Paper")
+      GAME_RULES[player.choice.downcase.to_sym][computer.choice.downcase.to_sym]>=1
     end
 
     def draw
@@ -33,6 +37,7 @@ class Game
     end
 
     def lose
-      (player.choice == "Rock" && computer.choice == "Paper") || (player.choice == "Paper" && computer.choice == "Scissors") || (player.choice == "Scissors" && computer.choice == "Rock")
+      GAME_RULES[player.choice.downcase.to_sym][computer.choice.downcase.to_sym]<0
     end
+
 end

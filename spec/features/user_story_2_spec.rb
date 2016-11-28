@@ -3,11 +3,16 @@
 # I would like to be able to play rock/paper/scissors
 
 RSpec.feature "Playing rock/paper/scissors" do
-  scenario "it should see 3 buttons" do
+  scenario "it should see 3 shapes" do
     register_and_play
-    expect(page).to have_button("Rock")
-    expect(page).to have_button("Paper")
-    expect(page).to have_button("Scissors")
+    expect(page).to have_content("Rock")
+    expect(page).to have_content("Paper")
+    expect(page).to have_content("Scissors")
+  end
+
+  scenario 'it should choose a shape' do
+    register_and_play
+    
   end
 
   scenario "it should have a computer as opponent" do

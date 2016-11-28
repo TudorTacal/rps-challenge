@@ -1,21 +1,33 @@
 require 'sinatra/base'
-require './lib/marketer.rb'
+require './lib/marketeer.rb'
 require './lib/computer.rb'
 
 class RPS < Sinatra::Base
   get '/' do
     erb(:index)
   end
+  #
+  # post '/name' do
+  #   @name = params[:name]
+  #   redirect '/play-game'
+  # end
+
+  before do
+    @game = Game.instance
+  end
+
+  # get '/play-game' do
+  #   erb(:play_game)
+  # end
 
   post '/play' do
-    marketer = Marketer.new(params[:name])
+    marketeer = Marketeer.new(params[:name])
     computer = Computer.new
-    @game = Game.create(marketer,computer)
+    @game = Game.create(marketeer,computer)
     erb(:play)
   end
 
   post '/result' do
-    @game = Game.instance
     @game.player.choice = params[:choice]
     @game.computer.select_weapon
     erb @game.result
